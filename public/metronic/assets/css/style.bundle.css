@@ -49724,3 +49724,18 @@ body,
     display: none !important;
   }
 }
+.symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa !important;
+}
+
+.bg-light-gradient {
+    background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+}

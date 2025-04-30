@@ -133,13 +133,17 @@
 
 @script
 <script>
-    window.addEventListener('notification', event => {
+     window.addEventListener('notification', event => {
         Toastify({
             text: event.detail.message,
             duration: 3000,
             close: true,
             gravity: "top",
             position: "right",
+            style: {
+                fontSize: '1.3rem',
+                padding: '2rem 2rem'
+            },
             backgroundColor: {
                 'success': '#1BC5BD',
                 'warning': '#FFA800',
