@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Producto;
 use App\Models\Venta;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 class VentaRapida extends Component
@@ -14,10 +15,15 @@ class VentaRapida extends Component
     public $busquedaProducto = '';
     public $totalVenta = 0;
 
+    public function mount()
+    {
+        Gate::authorize('registrar-ventas');
+    }
+
     public function addProducto($id)
     {
         if (collect($this->productos)->firstWhere('id',$id)) {
-            $this->dispatch('notification',['type'=>'warning','message'=>'Producto ya agregado']);
+            $this->dispatch('notification',type: 'warning', message:'Producto ya agregado');
             return;
         }
         $p = Producto::findOrFail($id);
@@ -57,6 +63,14 @@ class VentaRapida extends Component
 
     public function finalizarVenta()
     {
+         foreach ($this->productos as $p) {
+        $prodModel = Producto::findOrFail($p['id']);
+        if ($prodModel->stock < $p['cantidad']) {
+            $this->dispatch('notification', type: 'error', message: "No hay suficiente stock de {$prodModel->nombre}");
+            return;
+        }
+    }
+
         $v = Venta::create([
             'cliente_id'=>$this->cliente,
             'total'=>$this->totalVenta,
@@ -70,9 +84,10 @@ class VentaRapida extends Component
             ]);
             Producto::where('id',$p['id'])->decrement('stock',$p['cantidad']);
         }
+
         $this->productos = [];
         $this->totalVenta = 0;
-        $this->dispatch('notification',['type'=>'success','message'=>'Venta registrada']);
+        $this->dispatch('notification',type: 'success',message:'Venta registrada');
     }
 
 
