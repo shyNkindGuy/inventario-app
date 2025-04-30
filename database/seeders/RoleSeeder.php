@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -12,13 +11,17 @@ class RoleSeeder extends Seeder
 
     public function run(): void
     {
-        $admin = Role::firstOrCreate(['name' => 'admin']);
-        $usuario = Role::firstOrCreate(['name' => 'usuario']);
+        Permission::firstOrCreate(['name' => 'gestionar-inventario', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'realizar-ventas', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'registrar-ventas', 'guard_name' => 'web']); 
 
-        Permission::firstOrCreate(['name' => 'gestionar-inventario']);
-        Permission::firstOrCreate(['name' => 'registrar-ventas']);
+        $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+        $adminRole->syncPermissions(['gestionar-inventario', 'realizar-ventas', 'registrar-ventas']);
 
-        $admin->syncPermissions(['gestionar-inventario', 'registrar-ventas']);
-        $usuario->syncPermissions(['registrar-ventas']);
+
+        $userRole = Role::firstOrCreate(['name' => 'usuario', 'guard_name' => 'web']);
+        $userRole->syncPermissions(['realizar-ventas', 'registrar-ventas']);
+
     }
+    
 }

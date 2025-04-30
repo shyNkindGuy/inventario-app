@@ -20,14 +20,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    @can('gestionar-inventario')
                     <li class="nav-item">
                         <a class="nav-link @if(Route::currentRouteName() == 'inventario') active @endif" 
                         href="{{ route('inventario') }}">
                             <i class="bi bi-boxes me-2"></i>Inventario
                         </a>
                     </li>
-                    @endcan
                     <li class="nav-item">
                         <a class="nav-link @if(Route::currentRouteName() == 'ventas') active @endif" 
                            href="{{ route('ventas') }}">
@@ -42,7 +40,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="btn btn-light btn-sm">
-                        <i class="bi bi-box-arrow-right"></i>
+                        <i class="bi bi-box-arrow-right"></i>Cerrar Sesión
                     </button>
                 </form>
                 @else
@@ -59,6 +57,7 @@
     <div class="content d-flex flex-column flex-column-fluid">
         <main class="py-4">
             @yield('content')
+            {{ $slot }}
         </main>
     </div>
     <script src="{{ asset('metronic/assets/plugins/global/plugins.bundle.js') }}"></script>

@@ -44,17 +44,12 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        if(!Role::where('name', 'usuario')->exists()) {
-            throw new \Exception('El rol usuario no está configurado');
-        }
-        
-        $user->assignRole('usuario');
-        
+        $user->assignRole('usuario');    
         return $user;
     }
 
     protected function redirectPath()
     {
-        return route('home');
+        return '/login';
     }
 }
