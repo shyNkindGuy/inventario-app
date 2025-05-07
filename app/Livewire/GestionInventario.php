@@ -96,6 +96,8 @@ class GestionInventario extends Component
     {
         return view('livewire.gestion-inventario', [
             'productos' => Producto::orderBy('nombre')->get()
-        ])->layout('layouts.app');
+        ])->layout('layouts.app', [
+            'title' => 'Inventario'
+        ]);
     }
 }

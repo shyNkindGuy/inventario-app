@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<div>
+    <!DOCTYPE html>
 <html lang="es">
     <head>
         <meta charset="UTF-8">
@@ -66,3 +67,4 @@
     @livewireScripts
 </body>
 </html>
+</div>

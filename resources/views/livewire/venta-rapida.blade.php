@@ -1,5 +1,3 @@
-
-<div>
     <div class="container mt-5">
         @if(session()->has('notification'))
             <div class="alert alert-{{ session('notification.type') }} alert-dismissible fade show mb-5">
@@ -131,7 +129,6 @@
             </div>
         </div>
     </div>
-
     @script
     <script>
         window.addEventListener('notification', event => {
@@ -155,4 +152,3 @@
         });
     </script>
     @endscript
-</div>  

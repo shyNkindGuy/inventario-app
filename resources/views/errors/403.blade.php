@@ -1,5 +1,5 @@
-
-<div class="container min-vh-100 d-flex align-items-center justify-content-center">
+<x-layout title="Error 403">    
+    <div class="container min-vh-100 d-flex align-items-center justify-content-center">
     <div class="text-center">
         <div class="error-icon mb-4">
             <i class="bi bi-shield-lock text-danger" style="font-size: 5rem;" aria-hidden="true"></i>
@@ -38,3 +38,4 @@
         50% { transform: translateY(-15px); }
     }
 </style>
+</x-layout>
