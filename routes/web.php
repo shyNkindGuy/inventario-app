@@ -7,8 +7,10 @@ use App\Livewire\VentaRapida;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/debug', function () {
-    dd(auth()->user()->getPermissionsViaRoles());
+Route::get('/', function () {
+    return auth()->check()
+        ? redirect()->route('ventas')
+        : redirect()->route('login');
 });
 Route::middleware('guest')->group(function () {
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');

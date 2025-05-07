@@ -97,6 +97,8 @@ class VentaRapida extends Component
             ->orWhere('sku', $this->busquedaProducto)
             ->limit(5)
             ->get();
-        return view('livewire.venta-rapida', compact('resultados'))->layout('layouts.app');
+        return view('livewire.venta-rapida', compact('resultados'))->layout('layouts.app', [
+            'title' => 'Ventas'
+        ]);
     }
 }

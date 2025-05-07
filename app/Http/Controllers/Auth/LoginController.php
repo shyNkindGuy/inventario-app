@@ -9,7 +9,9 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login');
+        return auth()->check() 
+        ? redirect()->route('home')
+        : view('auth.login'); 
     }
 
     public function login(Request $request)
@@ -20,7 +22,7 @@ class LoginController extends Controller
         ]);
 
         if (auth()->attempt($credentials)) {
-            return redirect()->intended('/');
+            return redirect()->intended('ventas');
         }
 
         return back()->withErrors(['email' => 'Credenciales inválidas']);
@@ -32,6 +34,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         
-        return redirect('/');
+        return redirect('login');
     }
 }
