@@ -13,4 +13,9 @@ class Producto extends Model
         'stock',
         'precio',
     ];
+
+    public function solicitudesReposicion()
+    {
+        return $this->hasMany(SolicitudReposicion::class);
+    }
 }

@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -33,6 +32,11 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ],[
+            'name.required' => 'El nombre es requerido',
+            'email.required' => 'El email es requerido',
+            'password.required' => 'La contraseñas debe tener minimo 8 caracteres',
+            'password.confirmed' => 'Las contraseñas no coinciden',
         ]);
     }
 

@@ -19,13 +19,16 @@ class LoginController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+        ],[
+            'email.required' => 'El email es requerido',
+            'password.required' => 'La contraseña es requerida'
         ]);
 
         if (auth()->attempt($credentials)) {
             return redirect()->intended('ventas');
         }
 
-        return back()->withErrors(['email' => 'Credenciales inválidas']);
+        return back()->withErrors(['email' => 'Credenciales inválidas', 'password' => 'Credenciales inválidas']);
     }
 
     public function logout(Request $request)

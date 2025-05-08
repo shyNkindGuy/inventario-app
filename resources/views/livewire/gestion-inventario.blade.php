@@ -9,10 +9,11 @@
                             <span class="text-muted mt-3 font-weight-bold font-size-sm">Total de productos: {{ $productos->count() }}</span>
                         </h3>
                     </h3>
-                    <button class="btn btn-light btn-xl" wire:click="abrirModal">
-                        <i class="bi bi-plus-circle me-2"></i>Nuevo Producto
-                    </button>
+                    
                 </div>
+                <button class="btn btn-light btn-lg" wire:click="abrirModal">
+                    <i class="bi bi-plus-circle me-2"></i>Nuevo Producto
+                </button>
             </div>
     
             <div class="card-body bg-light">
@@ -43,33 +44,13 @@
                                 </td>
                                 <td class="text-muted fs-5">{{ Str::limit($producto->descripcion, 40) }}</td>
                                 <td>
-                                    <span class="badge bg-success fs-5">${{ number_format($producto->precio, 2) }}</span>
+                                    <span class="badge bg-success fs-5">S/{{ number_format($producto->precio, 2) }}</span>
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center align-items-center gap-2">
                                         <span class="fs-4 fw-bold @if($producto->stock <= 10) text-danger @endif">
                                             {{ $producto->stock }}
                                         </span>
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm btn-outline-primary" 
-                                                    data-bs-toggle="dropdown">
-                                                <i class="bi bi-gear"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a class="dropdown-item" 
-                                                       wire:click="mostrarModalStock('{{ $producto->id }}')">
-                                                        <i class="bi bi-plus-lg me-2"></i>Agregar Stock
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" 
-                                                       wire:click="solicitarStock('{{ $producto->id }}')">
-                                                        <i class="bi bi-bell me-2"></i>Solicitar Stock
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
                                     </div>
                                 </td>
                                 <td>
@@ -80,7 +61,7 @@
                                             <i class="bi bi-pencil"></i>
                                         </button>
                                         <button class="btn btn-sm btn-outline-danger"
-                                                wire:click="confirmarEliminacion('{{ $producto->id }}')">
+                                                wire:click="eliminarProducto('{{ $producto->id }}')">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                         @endcan
@@ -151,6 +132,24 @@
 
 @script
 <script>
+     document.addEventListener('DOMContentLoaded', function() {
+        window.Livewire.on('swal:confirm', (options) => {
+            Swal.fire({
+                title: options.title,
+                text: options.text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: options.confirmButtonText,
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.Livewire.emit(options.method, options.params);
+                }
+            });
+        });
+    });
     window.addEventListener('notification', event => {
         Toastify({
             text: event.detail.message,
