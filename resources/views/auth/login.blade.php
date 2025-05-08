@@ -1,45 +1,65 @@
-<x-layout title="Login">    
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow">
-                    <div class="card-header bg-primary text-white">{{ __('Login') }}</div>
-
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-
-                            <div class="mb-3">
-                                <label for="email" class="form-label">{{ __('Email') }}</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" 
-                                        name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+<x-layout title="Login">
+    <div class="container min-vh-100 d-flex align-items-center">
+        <div class="row justify-content-center w-100">
+            <div class="col-lg-10 col-xl-9">
+                <div class="card border-0 shadow-lg">
+                    <div class="row g-0">
+                        <div class="col-md-6 d-none d-md-block position-relative">
+                            <div class="p-5 h-100 d-flex align-items-center">
+                                <img src="{{ asset('img/logo_login.png') }} "draggable="false" class="img-fluid w-100">
                             </div>
-
-                            <div class="mb-3">
-                                <label for="password" class="form-label">{{ __('Password') }}</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" 
-                                        name="password" required autocomplete="current-password">
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card-body p-5">
+                                <h2 class="mb-12 text-center fw-bold display-6 text-primary">Bienvenid@</h2>
+                                
+                                <form method="POST" action="{{ route('login') }}">
+                                    @csrf
+                                    
+                                    <div class="mb-14">
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-transparent border-end-0">
+                                                <i class="bi bi-person fs-5 text-primary"></i>
+                                            </span>
+                                            <input type="email" 
+                                                   class="form-control form-control-lg border-start-0 @error('email') is-invalid @enderror" 
+                                                   name="email" 
+                                                   placeholder="Correo electrónico">
+                                        </div>
+                                        @error('email')<div class="text-danger small mt-2">{{$message}}</div>@enderror
+                                    </div>
+    
+                                    <div class="mb-14">
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-transparent border-end-0">
+                                                <i class="bi bi-lock fs-5 text-primary"></i>
+                                            </span>
+                                            <input type="password" 
+                                                   class="form-control form-control-lg border-start-0 @error('password') is-invalid @enderror" 
+                                                   name="password" 
+                                                   placeholder="Contraseña">
+                                        </div>
+                                        @error('password')<div class="text-danger small mt-2">{{$message}}</div>@enderror
+                                    </div>
+    
+                                    <button type="submit" class="btn btn-primary btn-lg w-100 py-4 fw-bold">
+                                        <i class="bi bi-box-arrow-in-right me-2"></i>
+                                        INGRESAR
+                                    </button>
+    
+                                    <div class="mt-4 text-center">
+                                        ¿No tienes una cuenta?
+                                        <a href="{{ route('register') }}" class="text-decoration-none text-primary fw-semibold">
+                                        Regístrate
+                                        </a>
+                                    </div>
+                                </form>
                             </div>
-
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-box-arrow-in-right"></i> {{ __('Login') }}
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</x-layout>
+    </x-layout>

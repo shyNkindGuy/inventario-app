@@ -12,6 +12,7 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         Permission::firstOrCreate(['name' => 'gestionar-inventario', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'ver-reportes', 'guard_name' => 'web']);
         Permission::firstOrCreate(['name' => 'realizar-ventas', 'guard_name' => 'web']);
         Permission::firstOrCreate(['name' => 'registrar-ventas', 'guard_name' => 'web']); 
 
@@ -20,7 +21,7 @@ class RoleSeeder extends Seeder
 
 
         $userRole = Role::firstOrCreate(['name' => 'usuario', 'guard_name' => 'web']);
-        $userRole->syncPermissions(['realizar-ventas', 'registrar-ventas']);
+        $userRole->syncPermissions(['realizar-ventas', 'registrar-ventas', 'ver-reportes']);
 
     }
     

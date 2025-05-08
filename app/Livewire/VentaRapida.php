@@ -3,13 +3,15 @@
 namespace App\Livewire;
 
 use App\Models\Producto;
+use App\Models\SolicitudReposicion;
 use App\Models\Venta;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 class VentaRapida extends Component
 {
-    
+    public $nombreCliente;
+    public $dniCliente;
     public $productos = [];
     public $cliente;
     public $busquedaProducto = '';
@@ -22,6 +24,15 @@ class VentaRapida extends Component
 
     public function addProducto($id)
     {
+        $p = Producto::findOrFail($id);
+
+        if ($p->stock < 1){
+            $this->dispatch(
+                'notification', type: 'error', message: 'No hay stock disponible para este producto'
+            );
+            return;
+        }
+
         if (collect($this->productos)->firstWhere('id',$id)) {
             $this->dispatch('notification',type: 'warning', message:'Producto ya agregado');
             return;
@@ -63,6 +74,14 @@ class VentaRapida extends Component
 
     public function finalizarVenta()
     {
+        $this->validate([
+            'nombreCliente' => 'required|string|max:100',
+            'dniCliente' => 'nullable|digits:8',
+        ],
+            [
+                'nombreCliente.required' => 'El nombre del cliente es obligatorio.',
+                'dniCliente.digits' => 'El DNI debe tener 8 dígitos.',
+            ]);
          foreach ($this->productos as $p) {
         $prodModel = Producto::findOrFail($p['id']);
         if ($prodModel->stock < $p['cantidad']) {
@@ -88,6 +107,34 @@ class VentaRapida extends Component
         $this->productos = [];
         $this->totalVenta = 0;
         $this->dispatch('notification',type: 'success',message:'Venta registrada');
+    }
+
+    public function solicitarReposicion($productoId)
+    {
+        $producto = Producto::findOrFail($productoId);
+
+        if($producto->stock > 10){
+            $this->dispatch('notification', type: 'warning', message: 'El stock del producto es suficiente');
+        }
+
+        $existeSolicitud = SolicitudReposicion::where('producto_id', $productoId)
+        ->where('user_id', auth()->id())
+        ->where('estado', 'pendiente')
+        ->exists();
+
+        if ($existeSolicitud) {
+            $this->dispatch('notification', type: 'warning', message: 'Ya hay una solicitud pendiente para este producto');
+            return;
+        }
+
+        SolicitudReposicion::create([
+            'producto_id' => $productoId,
+            'user_id' => auth()->id(),
+            'cantidad_solicitada' => 100,
+            'estado' => 'pendiente',
+        ]);
+
+        $this->dispatch('notification', type: 'success', message: 'Solicitud enviada a administración');
     }
 
 

@@ -3,9 +3,16 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Livewire\GestionInventario;
+use App\Livewire\GestionSolicitudesReposicion;
+use App\Livewire\ReporteVentas;
 use App\Livewire\VentaRapida;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/reporte-ventas', ReporteVentas::class)
+    ->middleware('auth')->name('reportes');
+
+Route::get('/solicitudes', GestionSolicitudesReposicion::class)
+    ->middleware(['auth', 'can:gestionar-inventario'])->name('solicitudes');
 
 Route::get('/', function () {
     return auth()->check()
@@ -17,7 +24,7 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [LoginController::class, 'login']);
     Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('register', [RegisterController::class, 'register']);
-});
+    });
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');

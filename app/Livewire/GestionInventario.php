@@ -62,23 +62,14 @@ class GestionInventario extends Component
             Producto::find($this->productoId)->update($data);
             $this->dispatch('notification', type: 'success', message: 'Producto actualizado');
         } else {
-            Producto::create(array_merge($data, ['sku' => Str::uuid()]));
+            $ultimoProducto = Producto::latest('id')->first();
+            $nuevoSku = 'PRO' . str_pad(($ultimoProducto ? $ultimoProducto->id + 1 : 1), 4, '0', STR_PAD_LEFT);
+    
+            Producto::create(array_merge($data, ['sku' => $nuevoSku]));
             $this->dispatch('notification', type: 'success', message: 'Producto creado');
         }
 
         $this->cerrarModal();
-    }
-
-    public function confirmarEliminacion($productoId)
-    {
-        $this->dispatch('confirmar', 
-            type: 'warning',
-            title: '¿Eliminar producto?',
-            text: 'Esta acción no se puede deshacer',
-            confirmButtonText: 'Sí, eliminar',
-            method: 'eliminarProducto',
-            params: $productoId
-        );
     }
 
     public function eliminarProducto($productoId)

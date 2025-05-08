@@ -1,71 +1,91 @@
-<x-layout title="Registro">    
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">{{ __('Registro de Usuario') }}</h4>
-                </div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="mb-3">
-                            <label for="name" class="form-label">{{ __('Nombre') }}</label>
-                            <input id="name" type="text" 
-                                   class="form-control @error('name') is-invalid @enderror" 
-                                   name="name" value="{{ old('name') }}" 
-                                   required autocomplete="name" autofocus>
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+<x-layout title="Registro">
+    <div class="container min-vh-100 d-flex align-items-center">
+        <div class="row justify-content-center w-100">
+            <div class="col-lg-10 col-xl-9">
+                <div class="card border-0 shadow-lg">
+                    <div class="row g-0">
+                        <div class="col-md-6 d-none d-md-block position-relative">
+                            <div class="p-5 h-100 d-flex align-items-center">
+                                <img src="{{ asset('img/logo_login.png') }}"draggable="false" class="img-fluid w-100">
+                            </div>
                         </div>
+    
+                        <div class="col-md-6">
+                            <div class="card-body p-5">
+                                <h2 class="mb-5 text-center fw-bold display-6 text-primary">Registro de Usuario</h2>
+    
+                                <form method="POST" action="{{ route('register') }}">
+                                    @csrf
+    
+                                    <div class="mb-4">
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-transparent border-end-0">
+                                                <i class="bi bi-person-badge fs-5 text-primary"></i>
+                                            </span>
+                                            <input type="text" 
+                                                   class="form-control form-control-lg border-start-0 @error('name') is-invalid @enderror" 
+                                                   name="name" 
+                                                   placeholder="Nombre completo">
+                                        </div>
+                                        @error('name')<div class="text-danger small mt-2">{{$message}}</div>@enderror
+                                    </div>
+    
+                                    <div class="mb-4">
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-transparent border-end-0">
+                                                <i class="bi bi-envelope fs-5 text-primary"></i>
+                                            </span>
+                                            <input type="email" 
+                                                   class="form-control form-control-lg border-start-0 @error('email') is-invalid @enderror" 
+                                                   name="email" 
+                                                   placeholder="Correo electrónico">
+                                        </div>
+                                        @error('email')<div class="text-danger small mt-2">{{$message}}</div>@enderror
+                                    </div>
+    
+                                    <div class="mb-4">
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-transparent border-end-0">
+                                                <i class="bi bi-key fs-5 text-primary"></i>
+                                            </span>
+                                            <input type="password" 
+                                                   class="form-control form-control-lg border-start-0 @error('password') is-invalid @enderror" 
+                                                   name="password" 
+                                                   placeholder="Contraseña">
+                                        </div>
+                                        @error('password')<div class="text-danger small mt-2">{{$message}}</div>@enderror
+                                    </div>
+    
+                                    <div class="mb-5">
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-transparent border-end-0">
+                                                <i class="bi bi-key-fill fs-5 text-primary"></i>
+                                            </span>
+                                            <input type="password" 
+                                                   class="form-control form-control-lg border-start-0" 
+                                                   name="password_confirmation" 
+                                                   placeholder="Confirmar contraseña">
+                                        </div>
+                                    </div>
+    
+                                    <button type="submit" class="btn btn-primary btn-lg w-100 py-3 fw-bold">
+                                        <i class="bi bi-person-add me-2"></i>
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label">{{ __('Email') }}</label>
-                            <input id="email" type="email" 
-                                   class="form-control @error('email') is-invalid @enderror" 
-                                   name="email" value="{{ old('email') }}" 
-                                   required autocomplete="email">
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                                        REGISTRARSE
+                                    </button>
+    
+                                    <div class="mt-4 text-center">
+                                        ¿Ya tienes cuenta?
+                                        <a href="{{ route('login') }}" class="text-decoration-none text-primary fw-semibold">
+                                             Ingresa aquí
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-
-                        <div class="mb-3">
-                            <label for="password" class="form-label">{{ __('Contraseña') }}</label>
-                            <input id="password" type="password" 
-                                   class="form-control @error('password') is-invalid @enderror" 
-                                   name="password" required autocomplete="new-password">
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password-confirm" class="form-label">{{ __('Confirmar Contraseña') }}</label>
-                            <input id="password-confirm" type="password" 
-                                   class="form-control" 
-                                   name="password_confirmation" 
-                                   required autocomplete="new-password">
-                        </div>
-
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="bi bi-person-plus me-2"></i>{{ __('Registrarse') }}
-                            </button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</x-layout>
+    </x-layout>
