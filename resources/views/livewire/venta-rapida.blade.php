@@ -63,85 +63,67 @@
                         </div>
                     </div>
                 </div>
-                <div class="card card-flush shadow-lg">
-                    <div class="card-header bg-success text-white">
+                <div class="card card-flush shadow-sm">
+                    <div class="card-header bg-primary text-white d-flex align-items-center justify-content-between">
                         <h3 class="card-title fs-2"><i class="bi bi-receipt me-2"></i>Boleta de Venta</h3>
                     </div>
                     <div class="card-body">
-                        <div class="row mb-5">
-                            <div class="col-md-6">
-                                <div class="input-group input-group-lg mb-3">
-                                    <span class="input-group-text bg-success text-white">
-                                        <i class="bi bi-person-badge fs-4"></i>
-                                    </span>
-                                    <input type="text" 
-                                           class="form-control form-control-lg border-start-0 @error('nombreCliente') is-invalid @enderror"
-                                           placeholder="Nombre del cliente"
-                                           wire:model="nombreCliente" required>
-                                </div>
-                                @error('nombreCliente') <span class="text-danger">{{ $message }}</span> @enderror
-
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Cliente</label>
+                                <input type="text" class="form-control form-control-solid @error('nombreCliente') is-invalid @enderror" 
+                                       placeholder="Nombre del cliente" wire:model="nombreCliente" required>
+                                @error('nombreCliente') 
+                                <span class="text-danger small">{{ $message }}</span> 
+                                @enderror
                             </div>
-                            <div class="col-md-6">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-text bg-success text-white">
-                                        <i class="bi bi-credit-card fs-4"></i>
-                                    </span>
-                                    <input type="text" 
-                                           class="form-control form-control-lg border-start-0 @error('dniCliente') is-invalid @enderror"
-                                           placeholder="DNI/RUC (opcional)"
-                                           wire:model="dniCliente">
-                                </div>
-                                @error('dniCliente') <span class="text-danger">{{ $message }}</span> @enderror
-
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">DNI</label>
+                                <input type="text" class="form-control form-control-solid @error('dniCliente') is-invalid @enderror" 
+                                       placeholder="DNI (opcional)" wire:model="dniCliente">
+                                @error('dniCliente') 
+                                <span class="text-danger small">{{ $message }}</span> 
+                                @enderror
                             </div>
                         </div>
-    
-                        <div class="table-responsive">
-                            <table class="table table-borderless align-middle fs-5">
-                                <thead class="border-bottom border-1 border-dark">
+                
+                        <div class="table-responsive mb-4">
+                            <table class="table table-striped table-hover align-middle">
+                                <thead class="bg-light text-dark">
                                     <tr>
-                                        <th class="py-3">Producto</th>
-                                        <th class="text-center py-3">Cantidad</th>
-                                        <th class="text-end py-3">P. Unitario</th>
-                                        <th class="text-end py-3">Total</th>
-                                        <th class="text-center py-3">Acciones</th>
+                                        <th>Producto</th>
+                                        <th class="text-center">Cantidad</th>
+                                        <th class="text-end">P. Unitario</th>
+                                        <th class="text-end">Total</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($productos as $i => $prod)
-                                    <tr class="border-bottom">
-                                        <td class="py-3">
-                                            <div class="d-flex align-items-center">
-                                                <div class="symbol symbol-50px me-3">
-                                                    <span class="symbol-label bg-light-success fs-4">
-                                                        {{ substr($prod['nombre'], 0, 1) }}
-                                                    </span>
-                                                </div>
-                                                <span class="fw-bold">{{ $prod['nombre'] }}</span>
+                                    <tr>
+                                        <td class="d-flex align-items-center">
+                                            <div class="symbol symbol-40px me-3 bg-light-primary text-primary fw-bold rounded-circle">
+                                                {{ substr($prod['nombre'], 0, 1) }}
                                             </div>
+                                            <span class="fw-bold">{{ $prod['nombre'] }}</span>
                                         </td>
-                                        <td class="text-center py-3">
-                                            <div class="d-flex justify-content-center">
-                                                <button class="btn btn-icon btn-light btn-sm me-2"
-                                                        wire:click="decrementarCantidad({{ $i }})">
-                                                    <i class="bi bi-dash-lg fs-5"></i>
+                                        <td class="text-center">
+                                            <div class="input-group input-group-sm justify-content-center">
+                                                <button class="btn btn-outline-secondary" wire:click="decrementarCantidad({{ $i }})">
+                                                    <i class="bi bi-dash"></i>
                                                 </button>
-                                                <input type="text" 
-                                                       class="form-control form-control-solid w-80px text-center fs-5"
+                                                <input type="text" class="form-control text-center w-50" 
                                                        value="{{ $prod['cantidad'] }}" readonly>
-                                                <button class="btn btn-icon btn-light btn-sm ms-2"
-                                                        wire:click="incrementarCantidad({{ $i }})">
-                                                    <i class="bi bi-plus-lg fs-5"></i>
+                                                <button class="btn btn-outline-secondary" wire:click="incrementarCantidad({{ $i }})">
+                                                    <i class="bi bi-plus"></i>
                                                 </button>
                                             </div>
                                         </td>
-                                        <td class="text-end py-3">S/{{ number_format($prod['precio'], 2) }}</td>
-                                        <td class="text-end py-3 fw-bold text-success">S/{{ number_format($prod['precio'] * $prod['cantidad'], 2) }}</td>
-                                        <td class="text-center py-3">
-                                            <button class="btn btn-icon btn-danger btn-sm"
-                                                    wire:click="eliminarProducto({{ $i }})">
-                                                <i class="bi bi-trash fs-5"></i>
+                                        <td class="text-end">S/{{ number_format($prod['precio'], 2) }}</td>
+                                        <td class="text-end fw-bold text-primary">S/{{ number_format($prod['precio'] * $prod['cantidad'], 2) }}</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-icon btn-danger btn-sm" wire:click="eliminarProducto({{ $i }})">
+                                                <i class="bi bi-trash"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -149,47 +131,41 @@
                                 </tbody>
                             </table>
                         </div>
-    
-                        <div class="row mt-5">
+                
+                        <div class="row mt-4">
                             <div class="col-md-6">
-                                <div class="input-group input-group-lg mb-3">
-                                    <span class="input-group-text bg-success text-white">
-                                        <i class="bi bi-chat-text fs-4"></i>
-                                    </span>
-                                    <textarea class="form-control" 
-                                              placeholder="Observaciones (opcional)"
-                                              rows="2"
-                                              wire:model="observaciones"></textarea>
-                                </div>
+                                <label class="form-label fw-bold">Observaciones</label>
+                                <textarea class="form-control form-control-solid" placeholder="Observaciones (opcional)" 
+                                          rows="3" wire:model="observaciones"></textarea>
                             </div>
                             <div class="col-md-6">
-                                <div class="bg-light rounded-3 p-4">
-                                    <div class="d-flex justify-content-between fs-4 mb-2">
-                                        <span class="text-muted">Subtotal:</span>
-                                        <span class="fw-bold">S/{{ number_format($totalVenta, 2) }}</span>
+                                <div class="bg-light p-3 rounded">
+                                    <div class="d-flex justify-content-between fs-5 mb-2">
+                                        <span>Subtotal:</span>
+                                        <span>S/{{ number_format($totalVenta, 2) }}</span>
                                     </div>
-                                    <div class="d-flex justify-content-between fs-4 mb-3">
-                                        <span class="text-muted">IGV (18%):</span>
-                                        <span class="fw-bold">S/{{ number_format($totalVenta * 0.18, 2) }}</span>
+                                    <div class="d-flex justify-content-between fs-5 mb-2">
+                                        <span>IGV (18%):</span>
+                                        <span>S/{{ number_format($totalVenta * 0.18, 2) }}</span>
                                     </div>
-                                    <div class="d-flex justify-content-between fs-2 text-success fw-bold border-top pt-3">
+                                    <div class="d-flex justify-content-between fs-4 text-primary fw-bold border-top pt-2">
                                         <span>TOTAL:</span>
                                         <span>S/{{ number_format($totalVenta * 1.18, 2) }}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-    
+                
                         <div class="d-flex justify-content-end mt-4">
-                            <button class="btn btn-success btn-lg px-8 py-3 fw-bold"
-                                    wire:click="finalizarVenta"
+                            <button class="btn btn-primary btn-lg px-5 fw-bold" 
+                                    wire:click="finalizarVenta" 
                                     @disabled(!count($productos))>
-                                <i class="bi bi-check2-circle fs-3 me-2"></i>
-                                GENERAR VENTA
+                                <i class="bi bi-check-circle me-2"></i> Generar Venta
                             </button>
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>

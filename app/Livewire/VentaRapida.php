@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\SolicitudReposicion;
 use App\Models\Venta;
@@ -88,10 +89,19 @@ class VentaRapida extends Component
             $this->dispatch('notification', type: 'error', message: "No hay suficiente stock de {$prodModel->nombre}");
             return;
         }
-    }
-
+        }
+        if (!empty($this->dniCliente)) {
+            $cliente = Cliente::firstOrCreate(
+                ['dni' => $this->dniCliente],
+                ['nombre' => $this->nombreCliente]
+            );
+        } else {
+            $cliente = Cliente::firstOrCreate(
+                ['nombre' => $this->nombreCliente, 'dni' => null]
+            );
+        }
         $v = Venta::create([
-            'cliente_id'=>$this->cliente,
+            'cliente_id'=>$cliente->id,
             'total'=>$this->totalVenta,
             'fecha'=>now(),
         ]);

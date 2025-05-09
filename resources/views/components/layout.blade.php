@@ -61,11 +61,11 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-custom shadow-sm mb-5">
+<nav class="navbar navbar-expand-lg navbar-custom shadow-sm mb-1">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="#">
-            <img src="{{ asset('img/logo_panel.png') }}" alt="Logo Panel" class="me-2">
-            <span class="fs-3 text-white">Sistema de Inventario</span>
+            <img src="{{ asset('img/logo_panel.png') }}" draggable="false" alt="Logo Panel" class="me-8">
+            <span class="fs-2 text-white">Sistema de Inventario</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -75,19 +75,19 @@
                 <li class="nav-item">
                     <a class="nav-link @if(Route::currentRouteName() == 'inventario') active @endif" 
                     href="{{ route('inventario') }}">
-                        <i class="bi bi-boxes me-2"></i>Inventario
+                        <i class="bi bi-boxes me-5"></i>Inventario
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @if(Route::currentRouteName() == 'ventas') active @endif" 
                        href="{{ route('ventas') }}">
-                        <i class="bi bi-cash-coin me-2"></i>Ventas
+                        <i class="bi bi-cash-coin me-5"></i>Ventas
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link @if(Route::currentRouteName() == 'reporte-ventas') active @endif" 
                        href="{{ route('reportes') }}">
-                       <i class="bi bi-receipt me-2"></i>Reporte de Ventas
+                       <i class="bi bi-receipt me-5"></i>Reporte de Ventas
                     </a>
                 </li>
                 @can('gestionar-inventario')

@@ -8,6 +8,8 @@ use App\Livewire\ReporteVentas;
 use App\Livewire\VentaRapida;
 use Illuminate\Support\Facades\Route;
 
+
+Route::get('/ventas/{id}/pdf', [ReporteVentas::class, 'exportarPDF'])->name('ventas.pdf');
 Route::get('/reporte-ventas', ReporteVentas::class)
     ->middleware('auth')->name('reportes');
 
