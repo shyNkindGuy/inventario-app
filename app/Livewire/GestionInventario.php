@@ -56,6 +56,10 @@ class GestionInventario extends Component
             'descripcion' => 'nullable|max:500',
             'precio' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0'
+        ],[
+            'nombre.required' => 'El nombre del producto es requerido',
+            'precio.required' => 'El precio del producto es requerido',
+            'stock.required' => 'El stock del producto es requerido',
         ]);
 
         if($this->productoId) {

@@ -1,5 +1,5 @@
-<div> <!-- Elemento raíz único -->
-    <div> <!-- Contenedor principal -->
+<div>
+    <div> 
         @forelse($solicitudes as $solicitud)
         <div class="card solicitud-card mb-3">
             <div class="card-body d-flex align-items-center">

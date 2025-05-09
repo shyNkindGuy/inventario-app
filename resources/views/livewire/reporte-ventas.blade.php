@@ -107,12 +107,10 @@
                                     </td>
 
                                     <td class="text-center">
-                                        
-                                        <button class="btn btn-sm btn-outline-secondary ms-2"
-                                                data-bs-toggle="tooltip" 
-                                                title="Descargar PDF">
+                                        <a href="{{ route('ventas.pdf', $venta->id) }}" class="btn btn-sm btn-outline-secondary" 
+                                           target="_blank" title="Descargar PDF">
                                             <i class="bi bi-file-earmark-pdf"></i>
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -130,4 +128,21 @@
             </div>
         </div>
     </div>
+    <style>
+        .pagination {
+            justify-content: center;
+        }
+        .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: #fff;
+        }
+        .page-link {
+            color: #0d6efd;
+            transition: all 0.3s;
+        }
+        .page-link:hover {
+            background-color: #e9ecef;
+        }
+    </style>
 </div>

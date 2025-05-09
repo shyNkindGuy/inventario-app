@@ -65,8 +65,8 @@
 <nav class="navbar navbar-expand-lg navbar-custom shadow-sm mb-5">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="#">
-            <img src="{{ asset('img/logo_panel.png') }}" alt="Logo Panel" class="me-2">
-            <span class="fs-3 text-white">Sistema de Inventario</span>
+            <img src="{{ asset('img/logo_panel.png') }}" draggable="false" alt="Logo Panel" class="me-8">
+            <span class="fs-2 text-white">Sistema de Inventario</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
